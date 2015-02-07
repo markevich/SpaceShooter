@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	public GameObject hazard;
@@ -7,7 +8,12 @@ public class GameController : MonoBehaviour {
 	public int hazardCount = 1;
 	public float spawnWait, startWait, waveWait;
 
+	public Text scoreText;
+	private int _score = 0;
+
 	public void Start(){
+		scoreText = scoreText.GetComponent<Text>();
+		UpdateScore();
 		StartCoroutine(SpawnWaves());
 	}
 
@@ -23,5 +29,14 @@ public class GameController : MonoBehaviour {
 
 			yield return new WaitForSeconds(waveWait);
 		}
+	}
+
+	private void UpdateScore(){
+		scoreText.text = "Score: " + _score;
+	}
+
+	public void AddScore(int newScoreValue){
+		_score += newScoreValue;
+		UpdateScore();
 	}
 }
