@@ -8,7 +8,7 @@ public class Boundary {
 
 public class PlayerController : MonoBehaviour {
 	public float speed = 1;
-	public float _tilt = 1;
+	public float tilt = 1;
 	
 	public Boundary boundary;
 
@@ -27,6 +27,18 @@ public class PlayerController : MonoBehaviour {
 		_clampedPositionVector.z = Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax);
 
 		rigidbody.position = _clampedPositionVector;
-		rigidbody.rotation = Quaternion.Euler(0f, 0f, rigidbody.velocity.x * -_tilt);
+		rigidbody.rotation = Quaternion.Euler(0f, 0f, rigidbody.velocity.x * -tilt);
+	}
+
+	public GameObject shot;
+	public Transform shotSpawn;
+	public float fireRate = 1f;
+	private float nextFire = 0f;
+
+	public void Update(){
+		if(Input.GetButton("Fire1") && Time.time > nextFire){
+			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+			nextFire = Time.time + fireRate;
+		}
 	}
 }
