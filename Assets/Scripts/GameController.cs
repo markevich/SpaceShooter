@@ -8,9 +8,10 @@ public class GameController : MonoBehaviour {
 	public int hazardCount = 1;
 	public float spawnWait, startWait, waveWait;
 
-	public Text scoreText, restartText, gameOverText;
+	public Text scoreText, restartText, gameOverText, levelText;
 	private int currentHazardCount;
 	private int _score = 0;
+	private int _level = 1;
 
 	private bool gameOver, restart = false;
 
@@ -18,6 +19,7 @@ public class GameController : MonoBehaviour {
 		scoreText = scoreText.GetComponent<Text>();
 		restartText = restartText.GetComponent<Text>();
 		gameOverText = gameOverText.GetComponent<Text>();
+		levelText = levelText.GetComponent<Text>();
 		restartText.text = gameOverText.text = "";
 
 		currentHazardCount = hazardCount;
@@ -35,22 +37,26 @@ public class GameController : MonoBehaviour {
 				yield return new WaitForSeconds(spawnWait);
 			}
 
-			currentHazardCount ++;
-
+			currentHazardCount += 3;
 			if(gameOver){
 				restartText.text = "Press 'R' to restart";
 				restart = true;
 				break;
 			}
 
+			_level += 1;
+			levelText.text = "Level: " + _level;
 			yield return new WaitForSeconds(waveWait);
 		}
 	}
 
 	void Update(){
 		if(restart)
-			if(Input.GetKeyDown(KeyCode.R))
+			if(Input.GetKeyDown(KeyCode.R)){
 				Application.LoadLevel(Application.loadedLevel);
+				_level = 1;
+				levelText.text = "Level: 1";
+			}
 	}
 
 	private void UpdateScore(){
