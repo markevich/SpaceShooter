@@ -21,13 +21,13 @@ public class PlayerController : MonoBehaviour {
 		_velocityVector.x = moveHorizontal;
 		_velocityVector.z = moveVertical;
 
-		rigidbody.velocity = _velocityVector * speed;
+		GetComponent<Rigidbody>().velocity = _velocityVector * speed;
 
-		_clampedPositionVector.x = Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax);
-		_clampedPositionVector.z = Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax);
+		_clampedPositionVector.x = Mathf.Clamp(GetComponent<Rigidbody>().position.x, boundary.xMin, boundary.xMax);
+		_clampedPositionVector.z = Mathf.Clamp(GetComponent<Rigidbody>().position.z, boundary.zMin, boundary.zMax);
 
-		rigidbody.position = _clampedPositionVector;
-		rigidbody.rotation = Quaternion.Euler(0f, 0f, rigidbody.velocity.x * -tilt);
+		GetComponent<Rigidbody>().position = _clampedPositionVector;
+		GetComponent<Rigidbody>().rotation = Quaternion.Euler(0f, 0f, GetComponent<Rigidbody>().velocity.x * -tilt);
 	}
 
 	public GameObject shot;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 	public void Update(){
 		if(Input.GetButton("Fire1") && Time.time > nextFire){
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 			nextFire = Time.time + fireRate;
 		}
 	}

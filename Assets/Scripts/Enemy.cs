@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour {
 	public void Update(){
 		if(Time.time > nextFire){
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
-			audio.Play();
+			GetComponent<AudioSource>().Play();
 			nextFire = Time.time + fireRate;
 		}
 	}

@@ -5,6 +5,6 @@ public class mover : MonoBehaviour {
 	public float speed = 1;
 
 	void Start(){
-		rigidbody.velocity = transform.forward * speed;
+		GetComponent<Rigidbody>().velocity = transform.forward * speed;
 	}
 }
